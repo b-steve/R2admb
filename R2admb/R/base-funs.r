@@ -42,7 +42,7 @@ compile_admb <- function(fn,safe=FALSE,re=FALSE,verbose=FALSE,
 	if (inherits(test,"try-error")) stop("base admb command failed: run setup_admb(), or check ADMB installation")
 	args <- ""
 	if (re) args <- "-r"
-	if (safe) args <- paste(args,"-s")
+	if (safe) args <- paste(args,"-s") else args <- paste(args, "-O")
 	if (verbose) cat("compiling with args: '",args,"' ...\n")
 	res0 <- system(paste("admb",args,fn," 2>",paste(fn,".cout",sep="")),
 			intern=TRUE)
