@@ -60,7 +60,7 @@ read_pars <- function (fn,drop_phase=TRUE) {
     sd_dat <- rt(fn,"std", skip = 1,as.is=TRUE)
     if (length(sd_dat)==1 && is.na(sd_dat)) {
         warning("std file missing: some problem with fit, but retrieving parameter estimates anyway")
-        npar <- length(pars)
+        npar <- length(est)
         cormat <- vcov <- matrix(NA,nrow=npar,ncol=npar)
         std <- rep(NA,npar)
         sdrptvals <- numeric(0)
@@ -195,6 +195,10 @@ read_pars0 <- function(fnext,par_dat,skip=1) {
     pp <- c(parlines,length(tmp2)+1)
     ## reshape parameters properly
     parid <- numeric(npar2)
+	## If report file didn't contain #value to identify report segments, 
+	## it would cause:  Error in cumline:(cumline + nrows - 1) : NA/NaN argument; adding the if below 
+	## solved that problem. J.Laake 7/1/2013
+	if(npar2>0)
     for (i in seq(npar2)) {
         nrows <- diff(pp)[i]-1
         curlines <- cumline:(cumline+nrows-1)
