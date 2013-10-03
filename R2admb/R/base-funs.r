@@ -2,12 +2,16 @@
 #'
 #'With various tests, calls the \code{admb} script to compile from a TPL file
 #'to an executable, or runs the resulting executable
-#'
-#'@usage compile_admb(fn,safe=FALSE,re=FALSE,verbose=FALSE,admb_errors=c("stop","warn","ignore"))
+#'@usage compile_admb(fn,safe=FALSE,re=FALSE,
+#' verbose=FALSE,
+#' admb_errors=c("stop","warn","ignore"))
 #' 
-#'       run_admb(fn,verbose=FALSE,mcmc=FALSE,mcmc.opts=mcmc.control(),profile=FALSE,extra.args="",admb_errors=c("stop","warn","ignore"))
+#'  run_admb(fn,verbose=FALSE,mcmc=FALSE,
+#' mcmc.opts=mcmc.control(),profile=FALSE,
+#' extra.args="",admb_errors=c("stop","warn","ignore"))
 #' 
-#'       read_admb(fn,verbose=FALSE,profile=FALSE,mcmc=FALSE,mcmc.opts=NULL,admbOut=NULL,checkterm=TRUE)
+#' read_admb(fn,verbose=FALSE,profile=FALSE,
+#' mcmc=FALSE,mcmc.opts=NULL,admbOut=NULL,checkterm=TRUE)
 #'@aliases compile_admb run_admb read_admb
 #'@export compile_admb run_admb read_admb
 #'@param fn (character) name of TPL file, without extension
@@ -38,7 +42,7 @@ compile_admb <- function(fn,safe=FALSE,re=FALSE,verbose=FALSE,
 	admb_errors <- match.arg(admb_errors)
 	if (!file.exists(fn2 <- paste(fn,"tpl",sep=".")))
             stop("can't find TPL file ",fn2)
-	test <- try(system("admb",intern=TRUE))
+	test <- try(system("admb",intern=TRUE),silent=TRUE)
 	if (inherits(test,"try-error")) stop("base admb command failed: run setup_admb(), or check ADMB installation")
 	args <- ""
 	if (re) args <- "-r"
